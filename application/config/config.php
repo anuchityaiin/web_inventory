@@ -228,20 +228,5 @@ $config["session_name"] = "inv_session";
 $config["cookie_path"] = "/inventory";
 $config["cookie_domain"] = "localhost";
 
-// config database
-$config['hostname'] = "localhost";
-$config['username'] = "root";
-$config['password'] = "root";
-$config['database'] = "inventory_db";
-$config['dbdriver'] = "mysql";
-$config['dbprefix'] = "";
-$config['pconnect'] = FALSE;
-$config['db_debug'] = TRUE;
-$config['cache_on'] = FALSE;
-$config['cachedir'] = "";
-$config['char_set'] = "utf8";
-$config['dbcollat'] = "utf8_general_ci";
-
-
 /* End of file config.php */
 /* Location: ./application/config/config.php */
