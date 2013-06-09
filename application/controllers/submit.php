@@ -23,8 +23,7 @@ class Submit extends CI_Controller {
 	}
         
         public function login()
-        {
-            
+        {            
             $this->load->model("member");
             $id = $this->member->genID();            
             $ss = $this->member->decodeSession($id);
@@ -45,7 +44,52 @@ class Submit extends CI_Controller {
         
         public function register()
         {
+            $u = addslashes($this->input->post('u'));
             echo 'Register';
+        }
+        
+        public function checkUsername()
+        {
+            $u = addslashes($this->input->post('u'));
+            $res = array();
+            if($u!=''){
+                if(preg_match('/^[a-z\d]{4,30}$/i',$u)){
+                    $this->load->database();
+                    $query = $this->db->query('SELECT * FROM `admin` WHERE `username` LIKE \''.$u.'\' LIMIT 0, 1');
+                    if($query->num_rows()==0){
+                        $res["res"] = true;
+                        $res["data"] = array("msg" => "Yes!");
+                    }
+                    else{
+                        $res["res"] = false;
+                        $res["data"] = array("msg" => "มีผู้ใช้ชื่อนี้แล้ว");
+                    }
+                }
+                else{
+                    $res["res"] = false;
+                    $res["data"] = array("msg" => "รูปแบบไม่ถูก");
+                }          
+            }
+            else{
+                $res["res"] = false;
+                    $res["data"] = array("msg" => "กรุณาตั้งชื่อผู้ใช้");
+            }
+            echo json_encode($res);
+        }
+        
+        public function checkPassword(){
+            $p = addslashes($this->input->post('p'));
+            $len = strlen($p);
+            $res = array();
+            if($len<7){
+                $res["res"] = false;
+                $res["data"] = array("msg" => "NO!");
+            }
+            else if($len>=7){
+                $res["res"] = true;
+                $res["data"] = array("msg" => "Yes!");
+            }
+            echo json_encode($res);
         }
 }
 
